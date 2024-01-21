@@ -1,8 +1,10 @@
 const express = require("express");
 const { createTodo, updateTodo } = require("./types");
 const { todo } = require("./db");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get("/todos", async (req, res) => {
@@ -12,6 +14,7 @@ app.get("/todos", async (req, res) => {
 
 app.post("/todos", async (req, res) => {
 	const createData = req.body;
+	console.log(createData);
 	const parseData = createTodo.safeParse(createData);
 	if (!parseData.success) {
 		res.status(411).json({ msg: "Invalid data" });
